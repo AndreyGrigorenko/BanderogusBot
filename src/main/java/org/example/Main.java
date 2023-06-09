@@ -59,10 +59,20 @@ public class Main extends TelegramLongPollingBot {
               "Обери завдання, щоб перейти на наступний рівень");
 
       message.setChatId(chatId);
+
+      List<String> buttons = Arrays.asList(
+              "Сплести маскувальну сітку (+15 монет)",
+              "Зібрати кошти патріотичними піснями (+15 монет)",
+              "Вступити в Міністерство Мемів України (+15 монет)",
+              "Запустити волонтерську акцію (+15 монет)",
+              "Вступити до лав тероборони (+15 монет)"
+      );
+      buttons = getRandom3(buttons);
+
       attachButtons(message, Map.of(
-              "Сплести маскувальну сітку (+15 монет)", "level_1_task",
-              "Зібрати кошти патріотичними піснями (+15 монет)", "level_1_task",
-              "Вступити в Міністерство Мемів України (+15 монет)", "level_1_task"
+              buttons.get(0), "level_1_task",
+              buttons.get(1), "level_1_task",
+              buttons.get(2), "level_1_task"
       ));
 
       sendApiMethodAsync(message);
@@ -76,11 +86,23 @@ public class Main extends TelegramLongPollingBot {
                 "Баланс: 20 монет. \n" +
                 "Обери завдання, щоб перейти на наступний рівень");
         message.setChatId(chatId);
+
+        List<String> buttons = Arrays.asList(
+                "Зібрати комарів для нової біологічної зброї (+15 монет)",
+                "Пройти курс молодого бійця (+15 монет)",
+                "Задонатити на ЗСУ (+15 монет)",
+                "Збити дрона банкою огірків (+15 монет)",
+                "Зробити запаси коктейлів Молотова (+15 монет)"
+        );
+
+        buttons = getRandom3(buttons);
+
         attachButtons(message, Map.of(
-                "Зібрати комарів для нової біологічної зброї (+15 монет)", "level_2_task",
-                "Пройти курс молодого бійця (+15 монет)", "level_2_task",
-                "Задонатити на ЗСУ (+15 монет)", "level_2_task"
+                buttons.get(0), "level_2_task",
+                buttons.get(1), "level_2_task",
+                buttons.get(2), "level_2_task"
         ));
+
         sendApiMethodAsync(message);
       }
 
@@ -91,11 +113,23 @@ public class Main extends TelegramLongPollingBot {
                 "Баланс: 35 монет. \n" +
                 "Обери завдання, щоб перейти на наступний рівень");
         message.setChatId(chatId);
+
+        List<String> buttons = Arrays.asList(
+                "Злітати на тестовий рейд по чотирьох позиціях (+15 монет)",
+                "Відвезти гуманітарку на передок (+15 монет)",
+                "Знайти зрадника та здати в СБУ (+15 монет)",
+                "Навести арту на орків (+15 монет)",
+                "Притягнути танк трактором (+15 монет)"
+        );
+
+        buttons = getRandom3(buttons);
+
         attachButtons(message, Map.of(
-                "Злітати на тестовий рейд по чотирьох позиціях (+15 монет)", "level_3_task",
-                "Відвезти гуманітарку на передок (+15 монет)", "level_3_task",
-                "Знайти зрадника та здати в СБУ (+15 монет)", "level_3_task"
+                buttons.get(0), "level_3_task",
+                buttons.get(1), "level_3_task",
+                buttons.get(2), "level_3_task"
         ));
+
         sendApiMethodAsync(message);
       }
 
@@ -109,6 +143,7 @@ public class Main extends TelegramLongPollingBot {
         attachButtons(message, Map.of(
                 "Купити Джавелін (50 монет)", "level_4_task"
         ));
+
         sendApiMethodAsync(message);
       }
 
@@ -152,7 +187,6 @@ public class Main extends TelegramLongPollingBot {
       button.setText(new String(buttonName.getBytes(), StandardCharsets.UTF_8));
       button.setCallbackData(buttonValue);
       keyboard.add(Arrays.asList(button));
-
     }
 
     markup.setKeyboard(keyboard);
@@ -174,5 +208,12 @@ public class Main extends TelegramLongPollingBot {
 
   public void setLevel(Long chatId, int level) {
     levels.put(chatId, level);
+  }
+
+  public List<String> getRandom3(List<String> variants) {
+    ArrayList<String> copy = new ArrayList<>(variants);
+    Collections.shuffle(copy);
+
+    return copy.subList(0, 3);
   }
 }
